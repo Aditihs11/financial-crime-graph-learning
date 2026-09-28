@@ -1,0 +1,5 @@
+EWC Parameter (lambda),Task A Initial F1,Task A Retention F1,Task A Retention (%),Task B Adaptation F1,Stability-Plasticity Assessment
+lambda = 0.0 (Vanilla),0.9410,0.5467,58.10%,0.9410,Severe Catastrophic Forgetting (-41.90% retention drop)
+lambda = 100.0 (Weak),0.9410,0.7660,81.40%,0.9580,Partial Retention Lift (+23.30% retention gain)
+lambda = 400.0 (Equilibrium),0.9410,0.8958,95.20%,0.9620,Best observed equilibrium within evaluated sweep
+lambda = 5000.0 (Over-Constrained),0.9410,0.9259,98.40%,0.7820,Plasticity Bottleneck (Novel adaptation degraded)

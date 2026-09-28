@@ -1,0 +1,35 @@
+{
+    "check_1_duplicate_ids": {
+        "passed": true,
+        "duplicates_found": 0
+    },
+    "check_2_merchant_completeness": {
+        "passed": true,
+        "missing_sectors": 0
+    },
+    "check_3_timestamp_completeness": {
+        "passed": true,
+        "missing_timestamps": 0
+    },
+    "check_4_non_negative_amounts": {
+        "passed": true,
+        "negative_amounts": 0
+    },
+    "check_5_orphan_devices": {
+        "passed": true,
+        "missing_devices": 0
+    },
+    "check_6_fraud_ratio": {
+        "passed": true,
+        "fraud_ratio_pct": 5.0
+    },
+    "check_7_bank_silos": {
+        "passed": true,
+        "banks_present": 10
+    },
+    "summary": {
+        "checks_passed": 7,
+        "total_checks": 7,
+        "status": "PASSED"
+    }
+}

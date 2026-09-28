@@ -1,0 +1,35 @@
+[
+  {
+    "model": "Random Forest",
+    "type": "Traditional ML",
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "train_time_s": 23.21,
+    "infer_tps": 198715.0
+  },
+  {
+    "model": "XGBoost",
+    "type": "Traditional ML",
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "train_time_s": 36.2,
+    "infer_tps": 88384.0
+  },
+  {
+    "model": "GraphSAGE (GNN)",
+    "type": "Graph Neural Network",
+    "roc_auc": 1.0,
+    "pr_auc": 1.0,
+    "f1": 0.9945,
+    "precision": 1.0,
+    "recall": 0.9891,
+    "train_time_s": 493.17,
+    "infer_tps": 32415.0
+  }
+]

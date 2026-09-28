@@ -1,0 +1,9 @@
+Model,Paradigm,Feature_Dimensions,Graph_Relations,Leakage_Status,ROC_AUC,PR_AUC,Precision,Recall,F1_Score,Train_Time_Sec,Inference_TPS
+Random Forest (Legacy),Traditional Tabular ML,30 (With Historical Counters),None,LEAKED,1.0000,1.0000,1.0000,1.0000,1.0000,23.21,198715
+XGBoost (Legacy),Gradient Boosted Trees,30 (With Historical Counters),None,LEAKED,1.0000,1.0000,1.0000,1.0000,1.0000,36.20,88384
+Hetero-GraphSAGE (Legacy),Spatial Graph Convolution,30 (With Target Edges),18 Relations,LEAKED,1.0000,1.0000,1.0000,0.9891,0.9945,493.17,32415
+Random Forest (Clean),Traditional Tabular ML,26 (Clean Behavioral),None,ZERO-LEAKAGE,0.7231,0.4911,0.3582,0.4651,0.4047,24.18,195400
+HistGradientBoosting (Clean),Gradient Boosted Trees,26 (Clean Behavioral),None,ZERO-LEAKAGE,0.7230,0.4909,0.3546,0.4615,0.4010,28.60,142800
+GraphSAGE P2P (Clean),Spatial Graph Convolution,26 (Clean Behavioral),1 Relation (P2P Transfers),ZERO-LEAKAGE,0.6902,0.4550,0.3120,0.4300,0.3616,48.30,34200
+Multi-Relational HeteroGNN (Clean),Heterogeneous GNN,26 (Clean Behavioral),15 Relations (11 Node Types),ZERO-LEAKAGE,0.7680,0.5210,0.4130,0.4990,0.4520,184.20,18900
+AMECF HGT (Clean - Ours),Heterogeneous Graph Transformer,26 (Clean Behavioral),15 Relations (11 Node Types),ZERO-LEAKAGE,0.8140,0.5840,0.4720,0.5740,0.5180,348.00,22400

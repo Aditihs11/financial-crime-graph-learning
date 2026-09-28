@@ -1,0 +1,65 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments and Secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.pfx
+
+# Large Data, Graph Tensors, and Generated Datasets
+data/20m_dataset/
+data/graph/*.pt
+data/graph/*.pth
+data/raw/*.csv
+*.pt
+*.pth
+*.bin
+*.onnx
+*.pkl
+
+# Compressed Archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Model checkpoints and weights
+checkpoints/
+models/checkpoints/
+*.ckpt
+
+# Scratch and Agent/IDE Caches
+.agents/
+.claude/
+.vscode/
+.idea/
+scratch/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# OS Artifacts
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# LaTeX temporary build artifacts
+research_paper/*.aux
+research_paper/*.log
+research_paper/*.out
+research_paper/*.synctex.gz
+research_paper/*.fls
+research_paper/*.fdb_latexmk
+research_paper/test_*

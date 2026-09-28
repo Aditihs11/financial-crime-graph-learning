@@ -1,0 +1,27 @@
+Figure 4: Catastrophic Forgetting Knowledge Retention Trajectory
+================================================================================
+Description:
+Knowledge retention trajectory across consecutive training phases:
+Task A (Base Typologies) -> Task B (Novel Typologies).
+Shows Vanilla GNN experiencing catastrophic forgetting with Task A retention falling to 58.1%,
+while AMECF + EWC (lambda = 400.0) maintains 95.2% retention.
+
+Figure 5: 5-Dimensional Performance Radar Comparison
+================================================================================
+Description:
+Polar radar comparison across 5 core evaluation metrics:
+- ROC-AUC
+- PR-AUC
+- F1-Score
+- Precision
+- Recall
+Comparing Tabular Random Forest, XGBoost, Hetero-GraphSAGE, and AMECF + EWC.
+
+Figure 6: Explanatory Sub-Graph for Coordinated Financial Crime Investigation
+================================================================================
+Description:
+SAR forensic sub-graph visualization for Case SAR-2026-5002 showing:
+- Smurfing fan-out from account A000102 to 4 mule accounts
+- Shared hardware device fingerprint D004128
+- Shared proxy IP address 185.220.101.42
+- Rapid cash-out aggregation into OTC Crypto Exchange merchant M000842.

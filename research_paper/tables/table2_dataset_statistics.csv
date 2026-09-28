@@ -1,0 +1,19 @@
+Entity / Component,Master Table Count,Graph Tensor Representation,Feature Dimensions,Semantic Operational Role
+Raw Transactions,20000000,20000000 across 10 Partitions,14 CSV Columns,Continuous 940-day transactional stream (2.58 GB)
+Account Entities,500000,487815,26 Clean (30 Pre-Audit),Primary financial accounts (classification target)
+Customer Entities,500000,487815,2,Synthetic legal account owner (1:1 with account)
+Hardware Devices,200000,199992,2 Clean (3 Pre-Audit),Hardware device fingerprints (OS, VPN, Jailbreak)
+Network IP Addresses,100000,99999,2 Clean (3 Pre-Audit),Network session IP origins (ISP, Geolocation)
+Commercial Merchants,50000,40000,3 Clean (4 Pre-Audit),Commercial point-of-sale recipient entities (16 Sectors)
+Crypto Gateways,20000,15724,2,Web3 / OTC cryptocurrency tumbler gateways
+ATM Terminals,1000,1000,2 Clean (3 Pre-Audit),Physical Automated Teller Machine terminals
+Federated Bank Silos,10,10,1 Clean (2 Pre-Audit),Independent banking institutions (BANK_A to BANK_J)
+Channel Modalities,4,4,2,Access mediums (Mobile App, Web, ATM, Branch)
+Merchant Sectors,16,16,2,Industrial Merchant Category Codes
+Country Jurisdictions,10,10,2,Sovereign geographic jurisdictions
+Typology Entities*,12 Typologies,13 Nodes (Pre-Audit),2,Injected ground-truth crime typologies (*PRUNED)
+Crime Ring Clusters*,500 Rings,500 Nodes (Pre-Audit),2,Injected ground-truth crime rings (*PRUNED)
+SAR Investigation Cases*,500 Cases,500 Nodes (Pre-Audit),2,Injected ground-truth investigation cases (*PRUNED)
+Total Graph Nodes,1381040,1333398 (Pre-Audit) / 1332385 (Clean),Variable,Full multi-entity heterogeneous graph
+Total Graph Edges,N/A,9698248 (Pre-Audit) / 9419331 (Safe),15 Safe Relations,874k P2P, 800k Merchant, 1.96M Device, 1.93M IP, 1.55M Bank
+Holdout Test Accounts,N/A,73173 (15% Stratified Split),26 Clean Dims,Rigidly isolated holdout evaluation test set

@@ -1,0 +1,33 @@
+\section{Introduction}
+\label{sec:intro}
+
+Financial crime, encompassing Anti-Money Laundering (AML) evasion, illicit fund routing, and decentralized payment exploitation, imposes severe economic distortions on the global economy, with the United Nations Office on Drugs and Crime (UNODC) estimating illicit flows at 2--5\% of global GDP. Modern criminal syndicates increasingly execute sophisticated, multi-stage laundering operations spanning diverse transaction channels, payment modalities, hardware fingerprints, and disparate institutional banking silos~\cite{weber2019anti}. 
+
+Traditional financial-crime intelligence systems implemented in Tier-1 banking institutions exhibit four critical architectural vulnerabilities:
+\begin{enumerate}
+    \item \textbf{Isolated Entity Modeling:} Conventional rule-based transaction monitoring systems (TMS) and tabular machine learning classifiers evaluate transactions or single-account records in isolation. They remain fundamentally blind to structural footprints that emerge only when examining multi-entity relational graphs connecting hardware identifiers, IP session logs, ATM cash-out terminals, commercial merchants, and Web3 crypto gateways.
+    \item \textbf{Institutional Silo Blind Spots:} Complex laundering rings intentionally route illicit capital across federated banking silos (inter-bank smurfing and layering), fragmenting the global transaction topology and rendering single-institution detection models incapable of reconstructing end-to-end audit trails.
+    \item \textbf{Catastrophic Forgetting under Typology Drift:} Financial crime typologies undergo continuous adversarial adaptation. When neural detection models are updated or fine-tuned on emerging attack vectors (e.g., novel crypto mixer tumblers), the optimization process overwrites orthogonal parameter subspaces, causing severe catastrophic forgetting of established typologies~\cite{kirkpatrick2017overcoming,parisi2019continual}.
+    \item \textbf{Benchmark Data Leakage in Academic Literature:} A prevalent yet under-analyzed vulnerability in computational AML research is the unintentional introduction of target-derived features or label-dependent graph topology into evaluation benchmarks~\cite{kaufman2012leakage,kapoor2023leakage}. Historical fraud counters and ground-truth crime ring relations trivially leak supervised targets into input representations, producing artificial near-perfect performance (e.g., $F_1 = 1.0000$) that collapses upon real-world deployment.
+\end{enumerate}
+
+To rigorously address these challenges without relying on leaked signals, this paper proposes the \textbf{graphforANN} framework and introduces \textbf{AMECF} (\textbf{A}daptive \textbf{M}ulti-\textbf{E}ntity \textbf{C}ontext \textbf{F}usion), a Heterogeneous Graph Transformer (HGT) architecture~\cite{hu2020heterogeneous} paired with an Elastic Weight Consolidation (EWC)~\cite{kirkpatrick2017overcoming} continual learning engine. Operating on a 20-million transaction synthetic multi-bank financial graph across 10 federated banking institutions, the framework establishes a certified 100\% zero-leakage benchmark environment.
+
+\subsection{Research Questions}
+This work systematically investigates four core research questions:
+\begin{itemize}
+    \item \textbf{RQ1 (Leakage Impact):} How does leakage-aware feature and graph construction affect reported financial-crime detection performance compared to legacy benchmark designs?
+    \item \textbf{RQ2 (Multi-Entity Context):} Does adaptive multi-entity heterogeneous graph fusion improve predictive performance over conventional tabular classifiers and homogeneous account-to-account (P2P) graph neural networks?
+    \item \textbf{RQ3 (Architectural Advantage):} Does the proposed AMECF architecture achieve measurable predictive gains over standard heterogeneous message-passing baselines under strictly leakage-safe conditions?
+    \item \textbf{RQ4 (Continual Retention):} Can Elastic Weight Consolidation mitigate catastrophic forgetting while preserving adaptive plasticity across sequential financial-crime learning tasks?
+\end{itemize}
+
+\subsection{Core Contributions}
+The primary contributions of this paper are summarized as follows:
+\begin{enumerate}
+    \item \textbf{Forensic Leakage Audit Protocol:} We conduct an exhaustive audit of feature-level and topological target leakage in financial graph benchmarks, demonstrating how historical label counters and crime-ring relations artificially inflate model metrics to $F_1 = 1.0000$.
+    \item \textbf{Leakage-Safe Heterogeneous Financial Graph:} We construct a sanitized 20M-transaction benchmark graph comprising 1,332,385 nodes across 11 entity types and 9,419,331 safe behavioral edges across 15 relations, removing 278,917 target-derived edges.
+    \item \textbf{AMECF Neural Architecture:} We design an attention-driven Heterogeneous Graph Transformer that adaptively projects multi-entity contextual signals into a shared representation space with residual LayerNorm connections.
+    \item \textbf{Continual Graph Learning with EWC:} We formulate a quadratic Fisher-weighted regularization mechanism that shields critical parameter subspaces, achieving 95.20\% base-task knowledge retention under concept drift.
+    \item \textbf{Empirical Evaluation on Holdout Benchmark:} We benchmark AMECF against tabular and graph baselines on a 73,173-account holdout test set, demonstrating superior clean detection performance ($F_1 = 0.5180$, $\text{ROC-AUC} = 0.8140$) over tabular ($F_1 = 0.4047$) and P2P GraphSAGE ($F_1 = 0.3616$) models.
+\end{enumerate}

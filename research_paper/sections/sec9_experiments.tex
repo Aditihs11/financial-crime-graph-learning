@@ -1,0 +1,32 @@
+\section{Experimental Methodology}
+\label{sec:experiments}
+
+\subsection{Data Partitioning \&  Class-Stratified Split}
+The 487,815 target accounts represented in the graph tensor are partitioned using a class-stratified 70\% / 15\% / 15\% split fixed by random seed 42:
+\begin{itemize}
+    \item \textbf{Training Set ($\mathcal{V}_{\text{train}}$):} 341,470 accounts (17,349 positive fraud cases, 324,121 benign).
+    \item \textbf{Validation Set ($\mathcal{V}_{\text{val}}$):} 73,172 accounts (3,718 positive fraud cases, 69,454 benign).
+    \item \textbf{Holdout Test Set ($\mathcal{V}_{\text{test}}$):} 73,173 accounts (3,718 positive fraud cases, 69,455 benign).
+\end{itemize}
+
+\subsection{Baseline Models Evaluated}
+To rigorously answer RQ1--RQ3, we evaluate five distinct architectural paradigms under 100\% zero-leakage conditions:
+\begin{enumerate}
+    \item \textbf{Random Forest (RF):} Scikit-learn implementation with 100 estimators, maximum tree depth 12, balanced class weighting, and 26 clean behavioral dimensions.
+    \item \textbf{HistGradientBoosting (HGB):} Scikit-learn gradient boosted decision tree with 150 iterations, maximum depth 6, learning rate 0.08, balanced class weighting, and 26 clean dimensions.
+    \item \textbf{GraphSAGE (P2P):} Homogeneous 2-layer GraphSAGE network operating on the 26 clean account dimensions and 874,180 account-to-account (\texttt{transfers\_to}) P2P transfer edges.
+    \item \textbf{Multi-Relational HeteroGNN:} Heterogeneous message-passing network using 1 layer of HGTConv across all 11 entity types and 15 safe behavioral relations.
+    \item \textbf{AMECF (HGT, Proposed):} 2-layer Heterogeneous Graph Transformer with type projections ($d_h = 64$), multi-head attention ($M = 2$), residual LayerNorm, and an account MLP head.
+\end{enumerate}
+
+\subsection{Evaluation Metrics}
+Given the extreme class imbalance ($\approx 5.08\%$ positive account ratio), models are evaluated using six complementary performance metrics on the holdout test set ($\mathcal{V}_{\text{test}}$):
+\begin{itemize}
+    \item \textbf{ROC-AUC:} Area under the Receiver Operating Characteristic curve.
+    \item \textbf{PR-AUC:} Area under the Precision-Recall curve (the primary ranking metric for highly imbalanced fraud detection).
+    \item \textbf{F1-Score, Precision, Recall:} Standard classification metrics evaluated at the default threshold $\tau = 0.5$.
+    \item \textbf{Training Latency (s) & Inference Throughput (TPS):} Measured transactions per second processed during evaluation.
+\end{itemize}
+
+\subsection{Hardware \&  Execution Environment}
+Experiments were executed in Python 3.12 / 3.13 utilizing PyTorch 2.x, PyTorch Geometric (PyG) 2.x~\cite{fey2019fast}, and Scikit-learn. All random seeds were universally set to 42. Training was performed in CPU multi-threaded mode.

@@ -1,0 +1,107 @@
+{
+  "project": "graphforANN",
+  "version": "2.0.0-certified",
+  "generated_date": "2026-08-20",
+  "provenance": "Repository Ground Truth Audit",
+  "dataset_statistics": {
+    "total_transactions": 20000000,
+    "partition_count": 10,
+    "partition_rows": 2000000,
+    "raw_dataset_size_gb": 2.58,
+    "date_range": {
+      "start_timestamp": "2024-01-01 00:00:00",
+      "end_timestamp": "2026-07-28 23:59:59",
+      "duration_days": 940,
+      "duration_months": 31.3
+    },
+    "global_fraud_ratio": 0.05,
+    "total_fraud_transactions": 1000000,
+    "investigation_cases_count": 500,
+    "critical_cases_count": 267
+  },
+  "graph_tensor_statistics": {
+    "tensor_file": "data/graph/hetero_graph_14node.pt",
+    "tensor_size_mb": 227.4,
+    "total_nodes": 1333398,
+    "total_edges": 9698248,
+    "node_type_counts": {
+      "account": 487815,
+      "customer": 487815,
+      "device": 199992,
+      "ip_address": 99999,
+      "merchant": 40000,
+      "crypto_wallet": 15724,
+      "atm": 1000,
+      "bank": 10,
+      "channel": 4,
+      "merchant_sector": 16,
+      "country": 10,
+      "typology": 13,
+      "ring": 500,
+      "case": 500
+    },
+    "edge_relation_counts": {
+      "(account, transfers_to, account)": 874180,
+      "(account, buys_from, merchant)": 800945,
+      "(account, withdraws_from, atm)": 159395,
+      "(account, uses_device, device)": 1960535,
+      "(account, from_ip, ip_address)": 1935113,
+      "(account, belongs_to, bank)": 1553378,
+      "(account, transacts_via, channel)": 926956,
+      "(account, owned_by, customer)": 487815,
+      "(merchant, operates_in, merchant_sector)": 40000,
+      "(bank, operates_in, country)": 10,
+      "(ip_address, geolocated_in, country)": 99999,
+      "(account, has_wallet, crypto_wallet)": 15724,
+      "(atm, located_in, bank)": 10000,
+      "(device, assigned_to, channel)": 539318,
+      "(merchant, accepts_crypto, crypto_wallet)": 15963,
+      "(account, involved_in, typology)": 92115,
+      "(account, member_of, ring)": 93401,
+      "(account, subject_of, case)": 93401
+    },
+    "account_split_counts": {
+      "train_mask_70pct": 341470,
+      "val_mask_15pct": 73172,
+      "test_mask_15pct": 73173,
+      "target_fraud_accounts": 24785,
+      "target_fraud_account_ratio": 0.0508
+    }
+  },
+  "typologies": [
+    "Smurfing_Structuring",
+    "MultiStep_Layering",
+    "Circular_RoundTripping",
+    "SharedDevice_MuleNetwork",
+    "Account_Takeover_ATO",
+    "BustOut_Fraud",
+    "Synthetic_Identity",
+    "Card_Testing",
+    "Merchant_Collusion",
+    "Crypto_Laundering",
+    "ATM_CashOut_Ring",
+    "Insider_Fraud"
+  ],
+  "bank_silos": [
+    "BANK_A",
+    "BANK_B",
+    "BANK_C",
+    "BANK_D",
+    "BANK_E",
+    "BANK_F",
+    "BANK_G",
+    "BANK_H",
+    "BANK_I",
+    "BANK_J"
+  ],
+  "validation_report": {
+    "total_checks": 7,
+    "checks_passed": 7,
+    "status": "PASSED",
+    "duplicate_transactions": 0,
+    "missing_timestamps": 0,
+    "missing_merchant_sectors": 0,
+    "negative_amounts": 0,
+    "unmapped_devices": 0
+  }
+}

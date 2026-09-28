@@ -1,0 +1,61 @@
+banks:
+  BANK_A:
+    daily_transfer_limit: 50000
+    single_transfer_limit: 10000
+    reporting_threshold: 10000
+    international_allowed: true
+    kyc_strictness: "HIGH"
+  BANK_B:
+    daily_transfer_limit: 100000
+    single_transfer_limit: 25000
+    reporting_threshold: 10000
+    international_allowed: true
+    kyc_strictness: "HIGH"
+  BANK_C:
+    daily_transfer_limit: 20000
+    single_transfer_limit: 5000
+    reporting_threshold: 10000
+    international_allowed: false
+    kyc_strictness: "MEDIUM"
+  BANK_D:
+    daily_transfer_limit: 75000
+    single_transfer_limit: 15000
+    reporting_threshold: 10000
+    international_allowed: true
+    kyc_strictness: "HIGH"
+  BANK_E:
+    daily_transfer_limit: 30000
+    single_transfer_limit: 8000
+    reporting_threshold: 10000
+    international_allowed: false
+    kyc_strictness: "MEDIUM"
+  BANK_F:
+    daily_transfer_limit: 200000
+    single_transfer_limit: 50000
+    reporting_threshold: 10000
+    international_allowed: true
+    kyc_strictness: "HIGH"
+  BANK_G:
+    daily_transfer_limit: 15000
+    single_transfer_limit: 3000
+    reporting_threshold: 10000
+    international_allowed: false
+    kyc_strictness: "LOW"
+  BANK_H:
+    daily_transfer_limit: 60000
+    single_transfer_limit: 12000
+    reporting_threshold: 10000
+    international_allowed: true
+    kyc_strictness: "MEDIUM"
+  BANK_I:
+    daily_transfer_limit: 40000
+    single_transfer_limit: 9000
+    reporting_threshold: 10000
+    international_allowed: false
+    kyc_strictness: "MEDIUM"
+  BANK_J:
+    daily_transfer_limit: 500000
+    single_transfer_limit: 100000
+    reporting_threshold: 10000
+    international_allowed: true
+    kyc_strictness: "HIGH"

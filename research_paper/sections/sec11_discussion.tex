@@ -1,0 +1,22 @@
+\section{Discussion, Limitations, \&  Future Work}
+\label{sec:discussion}
+
+\subsection{Discussion of Methodological Findings}
+The empirical results of this investigation yield several foundational insights for computational financial crime intelligence:
+\begin{enumerate}
+    \item \textbf{Leakage Control is Paramount:} Reported performance in excess of $0.99$ in AML literature must be critically audited for both feature-level and topological target leakage. When models are tested on genuine behavioral features without label-derived historical aggregations or target-bearing graph relations, realistic F1 scores are substantially lower ($\approx 0.40$--$0.52$).
+    \item \textbf{Heterogeneous Context Matters More than Pure P2P Depth:} Laundering rings increasingly avoid direct account-to-account flows. Capturing non-account conduits (e.g., shared hardware UUIDs, proxy IPs, and crypto gateways) yields a $+15.64$ F1 improvement over homogeneous P2P graph convolution.
+    \item \textbf{Continual Learning Enables Practical Deployment:} Rather than periodically retraining massive models from scratch—which is computationally prohibitive at 20M+ scale—regularization-based continual learning (EWC) provides a robust mechanism to assimilate emerging typologies without degrading historical detection coverage.
+\end{enumerate}
+
+\subsection{Limitations}
+In accordance with rigorous academic integrity standards, we explicitly document the following limitations of this study:
+\begin{itemize}
+    \item \textbf{Synthetic Multi-Bank Generation:} While the 20M dataset is built with realistic economic personas and typologies, it remains a synthetic environment and has not been blended with proprietary Tier-1 production banking logs due to legal and privacy constraints.
+    \item \textbf{Centralized Graph Representation:} The 10 federated bank silos were evaluated within a centralized multi-relational graph tensor; explicit distributed federated learning protocols (e.g., FedAvg across silos) were not evaluated in the zero-leakage benchmark.
+    \item \textbf{Benchmark & Sweep Scope:} The continual learning sweep evaluated four discrete regularization weights ($\lambda \in \{0.0, 100.0, 400.0, 5000.0\}$); finer-grained hyperparameter schedules remain open for exploration.
+    \item \textbf{Sub-Typology Granularity:} Granular per-typology zero-leakage F1 breakdowns were not isolated in the primary benchmark and represent aggregated metrics across the 12 typologies on the holdout test set.
+\end{itemize}
+
+\subsection{Future Work}
+Future research directions include: (1) formulating privacy-preserving federated graph neural networks (FedGNN) operating across bank silos without centralized graph aggregation, (2) integrating temporal edge timestamps into dynamic continuous-time graph transformers (TGAT/TGN), and (3) deploying large language model (LLM) copilot agents for automated Suspicious Activity Report (SAR) narrative generation.

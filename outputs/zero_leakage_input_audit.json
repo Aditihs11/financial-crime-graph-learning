@@ -1,0 +1,191 @@
+{
+  "status": "INPUTS_VERIFIED",
+  "input_graph": {
+    "path": "C:\\Users\\aditi\\OneDrive\\Desktop\\New folder\\graphforANN_Project_Complete (3)\\graphforANN_Project_Complete\\data\\graph\\hetero_graph_14node.pt",
+    "file_size_bytes": 227377135,
+    "sha256_hash": "501c8bbe458099f32eee4f58db8df83a919361f8ec7adca5e7d3dd37bc7d7d55",
+    "total_nodes": 1333398,
+    "total_edges": 9698248,
+    "node_types_count": 14,
+    "node_types": [
+      "account",
+      "merchant",
+      "atm",
+      "device",
+      "ip_address",
+      "bank",
+      "channel",
+      "customer",
+      "merchant_sector",
+      "typology",
+      "ring",
+      "case",
+      "country",
+      "crypto_wallet"
+    ],
+    "edge_relations_count": 18,
+    "edge_relations": [
+      "('account', 'transfers_to', 'account')",
+      "('account', 'buys_from', 'merchant')",
+      "('account', 'withdraws_from', 'atm')",
+      "('account', 'uses_device', 'device')",
+      "('account', 'from_ip', 'ip_address')",
+      "('account', 'belongs_to', 'bank')",
+      "('account', 'transacts_via', 'channel')",
+      "('account', 'owned_by', 'customer')",
+      "('merchant', 'operates_in', 'merchant_sector')",
+      "('account', 'involved_in', 'typology')",
+      "('account', 'member_of', 'ring')",
+      "('account', 'subject_of', 'case')",
+      "('bank', 'operates_in', 'country')",
+      "('ip_address', 'geolocated_in', 'country')",
+      "('account', 'has_wallet', 'crypto_wallet')",
+      "('atm', 'located_in', 'bank')",
+      "('device', 'assigned_to', 'channel')",
+      "('merchant', 'accepts_crypto', 'crypto_wallet')"
+    ],
+    "node_feature_dimensions": {
+      "account": [
+        487815,
+        30
+      ],
+      "merchant": [
+        40000,
+        4
+      ],
+      "atm": [
+        1000,
+        3
+      ],
+      "device": [
+        199992,
+        3
+      ],
+      "ip_address": [
+        99999,
+        3
+      ],
+      "bank": [
+        10,
+        2
+      ],
+      "channel": [
+        4,
+        2
+      ],
+      "customer": [
+        487815,
+        2
+      ],
+      "merchant_sector": [
+        16,
+        2
+      ],
+      "typology": [
+        13,
+        2
+      ],
+      "ring": [
+        500,
+        2
+      ],
+      "case": [
+        500,
+        2
+      ],
+      "country": [
+        10,
+        2
+      ],
+      "crypto_wallet": [
+        15724,
+        2
+      ]
+    },
+    "edge_counts_per_relation": {
+      "('account', 'transfers_to', 'account')": 874180,
+      "('account', 'buys_from', 'merchant')": 800945,
+      "('account', 'withdraws_from', 'atm')": 159395,
+      "('account', 'uses_device', 'device')": 1960535,
+      "('account', 'from_ip', 'ip_address')": 1935113,
+      "('account', 'belongs_to', 'bank')": 1553378,
+      "('account', 'transacts_via', 'channel')": 926956,
+      "('account', 'owned_by', 'customer')": 487815,
+      "('merchant', 'operates_in', 'merchant_sector')": 40000,
+      "('account', 'involved_in', 'typology')": 92115,
+      "('account', 'member_of', 'ring')": 93401,
+      "('account', 'subject_of', 'case')": 93401,
+      "('bank', 'operates_in', 'country')": 10,
+      "('ip_address', 'geolocated_in', 'country')": 99999,
+      "('account', 'has_wallet', 'crypto_wallet')": 15724,
+      "('atm', 'located_in', 'bank')": 10000,
+      "('device', 'assigned_to', 'channel')": 539318,
+      "('merchant', 'accepts_crypto', 'crypto_wallet')": 15963
+    }
+  },
+  "account_partitions": {
+    "total_accounts": 487815,
+    "train_mask": 341470,
+    "val_mask": 73172,
+    "test_mask": 73173,
+    "train_pct": 70.0,
+    "val_pct": 15.0,
+    "test_pct": 15.0
+  },
+  "account_labels": {
+    "positive_fraud_count": 84703,
+    "negative_legit_count": 403112,
+    "fraud_prevalence_pct": 17.36
+  },
+  "leakage_sanitization_specification": {
+    "raw_account_feature_dims": 30,
+    "excluded_feature_dims": [
+      10,
+      11,
+      12,
+      13
+    ],
+    "excluded_feature_names": [
+      "fraud_tx_sent",
+      "fraud_tx_received",
+      "fraud_rate_sent",
+      "fraud_recv_ratio"
+    ],
+    "clean_account_feature_dims": 26,
+    "pruned_target_node_types": [
+      "typology",
+      "ring",
+      "case"
+    ],
+    "pruned_target_relations": [
+      "('account', 'involved_in', 'typology')",
+      "('account', 'member_of', 'ring')",
+      "('account', 'subject_of', 'case')"
+    ],
+    "pruned_target_edges_count": 278917,
+    "retained_clean_node_types_count": 11,
+    "retained_clean_relations_count": 15,
+    "retained_clean_edges_count": 9419331
+  },
+  "supporting_artifacts": {
+    "configs": {
+      "banks.yaml": true,
+      "fraud.yaml": true,
+      "generator.yaml": true,
+      "personas.yaml": true
+    },
+    "raw_data_tables": [
+      "accounts.csv",
+      "banks.csv",
+      "companies.csv",
+      "countries.csv",
+      "crypto_wallets.csv",
+      "customers.csv",
+      "devices.csv",
+      "ip_addresses.csv",
+      "merchants.csv"
+    ],
+    "experiment_script_exists": true
+  },
+  "random_seed": 42
+}

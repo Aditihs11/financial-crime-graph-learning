@@ -1,0 +1,4 @@
+model,type,roc_auc,pr_auc,f1,precision,recall,train_time_s,infer_tps
+Random Forest,Traditional ML,1.0,1.0,1.0,1.0,1.0,23.21,198715.0
+XGBoost,Traditional ML,1.0,1.0,1.0,1.0,1.0,36.2,88384.0
+GraphSAGE (GNN),Graph Neural Network,1.0,1.0,0.9945,1.0,0.9891,493.17,32415.0

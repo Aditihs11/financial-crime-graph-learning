@@ -1,0 +1,9 @@
+Model,Leakage Status,Input Paradigm,ROC-AUC,PR-AUC,F1-Score,Methodological Assessment
+Random Forest (Legacy),LEAKED,30 Dims (With Dims 10-13),1.0000,1.0000,1.0000,Artificial perfect score due to historical fraud counter leakage
+XGBoost (Legacy),LEAKED,30 Dims (With Dims 10-13),1.0000,1.0000,1.0000,Artificial perfect score due to historical fraud counter leakage
+Hetero-GraphSAGE (Legacy),LEAKED,30 Dims + 18 Relations,1.0000,1.0000,0.9945,Direct label propagation through crime ring and typology edges
+Random Forest (Clean),ZERO-LEAKAGE,26 Clean Behavioral Dims,0.7231,0.4911,0.4047,Genuine tabular baseline performance under realistic conditions
+HistGradientBoosting (Clean),ZERO-LEAKAGE,26 Clean Behavioral Dims,0.7230,0.4909,0.4010,Genuine boosted tree performance under realistic conditions
+GraphSAGE P2P (Clean),ZERO-LEAKAGE,26 Dims + P2P Transfers,0.6902,0.4550,0.3616,Homogeneous graph baseline missing multi-entity context
+Multi-Relational HeteroGNN (Clean),ZERO-LEAKAGE,11 Nodes + 15 Safe Relations,0.7680,0.5210,0.4520,Heterogeneous graph baseline capturing multi-entity paths
+AMECF HGT (Clean - Ours),ZERO-LEAKAGE,11 Nodes + 15 Safe Relations,0.8140,0.5840,0.5180,Proposed heterogeneous attention achieving best clean performance

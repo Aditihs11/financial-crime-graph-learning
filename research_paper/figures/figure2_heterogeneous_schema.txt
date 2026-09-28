@@ -1,0 +1,13 @@
+Figure 2: 14-Node Heterogeneous Graph Meta-Schema Topology
+================================================================================
+Description:
+Meta-graph schema illustrating all 14 node entity types:
+- Core financial nodes: Account, Customer, Merchant, ATM, Bank, Channel
+- Telemetry nodes: Device, IP Address, Country
+- Contextual nodes: Merchant Sector, Crypto Wallet
+- Ground-truth forensic nodes: Typology, Ring, Case
+and the 18 directed asymmetric relational edge channels connecting them.
+
+Replacement Guide:
+Place the schema diagram (figure2.png or figure2.pdf) in this directory 
+and link it in research_paper.tex.

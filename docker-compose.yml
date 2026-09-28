@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  graphforann-platform:
+    build: .
+    container_name: graphforann_aml_platform
+    ports:
+      - "8000:8000"
+      - "8501:8501"
+    environment:
+      - API_SECRET_KEY=amecf-secure-token-8f92j-x01z
+      - BACKEND_HOST=0.0.0.0
+      - BACKEND_PORT=8000
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+      - ./outputs:/app/outputs

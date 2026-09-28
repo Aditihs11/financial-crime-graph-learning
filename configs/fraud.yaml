@@ -1,0 +1,37 @@
+scenarios:
+  smurfing:
+    weight: 0.15
+    min_amount: 9100
+    max_amount: 9950
+    mules_per_ring: 12
+  layering:
+    weight: 0.15
+    chain_length: 5
+    interval_minutes: 15
+  circular:
+    weight: 0.10
+    cycle_size: 4
+  crypto_laundering:
+    weight: 0.15
+    target_sector: "Crypto_Exchange"
+  account_takeover:
+    weight: 0.10
+    failed_logins_before_ato: 4
+  bust_out:
+    weight: 0.08
+    dormant_months: 6
+  synthetic_identity:
+    weight: 0.07
+    accounts_per_id: 10
+  card_testing:
+    weight: 0.05
+    test_count: 25
+  merchant_collusion:
+    weight: 0.05
+    target_sector: "Shell_Company"
+  atm_cashout:
+    weight: 0.05
+    target: "ATM"
+  insider_fraud:
+    weight: 0.05
+    override_limit: 100000

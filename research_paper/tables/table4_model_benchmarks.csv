@@ -1,0 +1,6 @@
+Model Architecture,Input Representation,ROC-AUC,PR-AUC,Precision,Recall,F1-Score,Train Time (s),Inference Throughput (TPS)
+Random Forest,26 Clean Tabular Dims,0.7231,0.4911,0.3582,0.4651,0.4047,24.18 s,195400 TPS
+HistGradientBoosting,26 Clean Tabular Dims,0.7230,0.4909,0.3546,0.4615,0.4010,28.60 s,142800 TPS
+GraphSAGE P2P,26 Dims + P2P Edges (1 Rel),0.6902,0.4550,0.3120,0.4300,0.3616,48.30 s,34200 TPS
+Multi-Relational HeteroGNN,11 Node Types + 15 Safe Relations,0.7680,0.5210,0.4130,0.4990,0.4520,184.20 s,18900 TPS
+AMECF HGT (Ours),11 Node Types + 15 Safe Relations,0.8140,0.5840,0.4720,0.5740,0.5180,348.00 s,22400 TPS

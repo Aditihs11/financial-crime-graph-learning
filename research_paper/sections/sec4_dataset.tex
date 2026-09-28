@@ -1,0 +1,62 @@
+\section{Dataset \&  Synthetic Multi-Bank Generation}
+\label{sec:dataset}
+
+\subsection{Multi-Bank Financial Simulation Architecture}
+Due to strict banking secrecy laws, GDPR constraints, and institutional competitive barriers, real-world multi-bank transaction graphs with comprehensive ground-truth forensic annotations are virtually impossible to open-source at scale. To provide a rigorous, reproducible benchmark, the \textbf{graphforANN} framework implements an enterprise-grade synthetic transaction generator synthesizing 20,000,000 transactions across 10 federated banking institutions (\texttt{BANK\_A} through \texttt{BANK\_J}).
+
+The generation pipeline integrates three specialized engines parameterized by external YAML configuration files:
+\begin{enumerate}
+    \item \textbf{Master Table Generator:} Compiles 9 normalized entity master tables (Table~\ref{tab:dataset_stats}) establishing unique primary keys, risk ratings, KYC strictness levels, and foreign-key integrity constraints.
+    \item \textbf{Persona Behavioral Engine:} Models 8 distinct socioeconomic personas (Student, Salaried Employee, Business Owner, Retiree, Freelancer, High-Net-Worth Individual, Money Mule, and Shell Company) parameterized with Gaussian hourly spending distributions, monthly salary cycles, utility schedules, and channel preferences.
+    \item \textbf{Financial Crime Typology Engine:} Injects 12 distinct topological crime typologies across 500 pre-compiled SAR investigation rings with ground-truth discovery dates, freeze timestamps, and investigation case identifiers.
+\end{enumerate}
+
+\begin{table}[t]
+\centering
+\caption{Dataset Entity \&  Structural Statistics}
+\label{tab:dataset_stats}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lrrr}
+\hline
+\textbf{Entity / Graph Component} & \textbf{Master Table} & \textbf{Graph Tensor} & \textbf{Feature Dims} \\
+\hline
+Raw Transactions & 20,000,000 & 20,000,000 (10 Parts) & 14 Columns \\
+Account Entities & 500,000 & 487,815 & 26 Clean (30 Raw) \\
+Customer Entities & 500,000 & 487,815 & 2 Dims \\
+Hardware Devices & 200,000 & 199,992 & 2 Clean (3 Raw) \\
+Network IP Addresses & 100,000 & 99,999 & 2 Clean (3 Raw) \\
+Commercial Merchants & 50,000 & 40,000 & 3 Clean (4 Raw) \\
+Crypto Gateways (Web3) & 20,000 & 15,724 & 2 Dims \\
+ATM Terminals & 1,000 & 1,000 & 2 Clean (3 Raw) \\
+Federated Banking Silos & 10 & 10 & 1 Clean (2 Raw) \\
+Channel Modalities & 4 & 4 & 2 Dims \\
+Merchant Sectors & 16 & 16 & 2 Dims \\
+Country Jurisdictions & 10 & 10 & 2 Dims \\
+Typology Nodes* & 12 Typologies & 13 Nodes (Pre-Audit) & 2 Dims (*Pruned) \\
+Crime Ring Clusters* & 500 Rings & 500 Nodes (Pre-Audit) & 2 Dims (*Pruned) \\
+SAR Investigation Cases* & 500 Cases & 500 Nodes (Pre-Audit) & 2 Dims (*Pruned) \\
+\hline
+\textbf{Total Graph Nodes} & \textbf{1,381,040} & \textbf{1,332,385 (Clean)} & \textbf{11 Entity Types} \\
+\textbf{Total Graph Edges} & \textbf{N/A} & \textbf{9,419,331 (Safe)} & \textbf{15 Safe Relations} \\
+Holdout Test Accounts & N/A & 73,173 (15\% Split) & 26 Clean Dims \\
+\hline
+\multicolumn{4}{l}{\footnotesize *Target-derived nodes and edges removed during forensic leakage sanitization.}
+\end{tabular}%
+}
+\end{table}
+
+\subsection{Typology Taxonomy \&  Injection Dynamics}
+The generator injects 1,000,000 fraud transactions, establishing an exact global fraud prevalence of $5.00\%$. The 12 injected typologies represent major financial crime patterns:
+\begin{itemize}
+    \item \textbf{Smurfing / Structuring:} High-frequency fan-out transfers structured just below regulatory thresholds (\$8,500--\$9,950) to multiple money mules.
+    \item \textbf{Multi-Step Layering:} Sequential transfer chains ($A \to B \to C \to D$) designed to obscure the source of funds.
+    \item \textbf{Circular Round-Tripping:} Closed-loop cycles ($A \to B \to C \to A$) creating artificial transaction velocity.
+    \item \textbf{Shared-Device Mule Rings:} Multiple distinct account owners authenticating via identical hardware UUIDs and VPN endpoints.
+    \item \textbf{Account Takeover (ATO):} Sudden bursts in velocity and volume following anomalous device or IP switching.
+    \item \textbf{Crypto Laundering:} Direct conversion of high-velocity funds into OTC crypto tumbler gateway wallets.
+    \item \textbf{ATM Cash-Out Rings:} Coordinated, rapid cash withdrawals across physical ATM terminals.
+    \item \textbf{Merchant Collusion & Bust-Out:} Inflated commercial payments to collusive shell company merchants.
+\end{itemize}
+
+\subsection{Automated Validation Suite}
+The generated 20M dataset is certified by an automated 7-point validation suite (`\texttt{src/validation/validate.py}`): (1) 0 duplicate transaction IDs, (2) 100\% complete merchant sector coverage, (3) 100\% complete ISO-8601 timestamps, (4) 0 negative transaction amounts, (5) 0 orphan hardware device IDs, (6) exact 5.00\% fraud label ratio, and (7) multi-bank silo distribution across all 10 institutions.

@@ -1,0 +1,18 @@
+dataset_name: "graphforANN_AML_20M"
+version: "v1.0"
+scale: "20m"
+total_transactions: 20000000
+chunk_size: 2000000
+seed: 42
+
+entities:
+  num_accounts: 500000
+  num_merchants: 50000
+  num_devices: 200000
+  num_ips: 100000
+  num_banks: 10
+
+simulation:
+  start_date: "2024-01-01 00:00:00"
+  end_date: "2026-07-28 23:59:59"
+  fraud_ratio: 0.05

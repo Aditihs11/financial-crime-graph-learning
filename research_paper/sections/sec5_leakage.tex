@@ -1,0 +1,59 @@
+\section{Leakage Threat Model \&  Forensic Audit}
+\label{sec:leakage}
+
+\subsection{Threat Model: Modalities of Target Leakage}
+A central methodological contribution of this paper is the identification, formalization, and elimination of data leakage in financial graph benchmarks. In multi-relational graphs, target leakage manifests across three primary vectors:
+\begin{enumerate}
+    \item \textbf{Direct Feature Leakage:} Inclusion of features constructed from ground-truth target variables aggregated over full historical partitions (e.g., historical fraud counter rates).
+    \item \textbf{Entity Feature Leakage:} Auxiliary node features (e.g., merchant or device risk ratings) computed as empirical target means from training and test partitions simultaneously.
+    \item \textbf{Topological Graph Leakage:} Graph edges that exist solely as a consequence of target labels, such as linking accounts directly to crime typology identifiers or SAR investigation clusters.
+\end{enumerate}
+
+\subsection{Forensic Audit of the Legacy 30-Dimensional Feature Set}
+In the pre-audit pipeline, account nodes were parameterized with a 30-dimensional feature vector. A forensic code audit revealed that dimensions 10--13 directly encoded target labels:
+\begin{itemize}
+    \item \textbf{Dim 10 (\texttt{fraud\_tx\_sent}):} $\sum \mathbb{I}(y_{\text{tx}} = 1)$ for outgoing events.
+    \item \textbf{Dim 11 (\texttt{fraud\_tx\_received}):} $\sum \mathbb{I}(y_{\text{tx}} = 1)$ for incoming events.
+    \item \textbf{Dim 12 (\texttt{fraud\_rate\_sent}):} $\frac{\sum \mathbb{I}(y_{\text{tx}} = 1)}{\text{Total Outgoing Transactions}}$.
+    \item \textbf{Dim 13 (\texttt{fraud\_recv\_ratio}):} $\frac{\sum \mathbb{I}(y_{\text{tx}} = 1)}{\text{Total Incoming Transactions}}$.
+\end{itemize}
+
+When standard tabular classifiers (Random Forest, XGBoost) and GNN models were trained with these dimensions, they achieved an artificial, trivial performance of $F_1 = 1.0000$ and $\text{ROC-AUC} = 1.0000$. As shown in Section~\ref{sec:results}, this perfect score collapses completely when evaluated in a production setting where ground-truth labels are unknown.
+
+\subsection{Categorization: Ground Truth, Predictive Features, and Metadata}
+To enforce absolute methodological hygiene, we strictly partition all information into three disjoint categories:
+\begin{itemize}
+    \item \textbf{Ground Truth ($\mathcal{Y}$):} Strictly quarantined for supervised loss computation on $\mathcal{V}_{\text{train}}$ and offline metric evaluation on $\mathcal{V}_{\text{test}}$. Comprises binary labels $y_u$, typology classes, SAR case IDs, and freeze dates.
+    \item \textbf{Predictive Features ($\mathcal{X}_{\text{safe}}$):} Restricted to 26 continuous behavioral dimensions derived strictly from timestamps, transaction amounts, counterparty diversity, and hardware frequencies.
+    \item \textbf{Evaluation Metadata ($\mathcal{M}$):} Node split masks ($\mathcal{V}_{\text{train}}$ 70\%, $\mathcal{V}_{\text{val}}$ 15\%, $\mathcal{V}_{\text{test}}$ 15\%) and bank silo identifiers.
+\end{itemize}
+
+\subsection{Clean 26-Dimensional Behavioral Feature Specification}
+Table~\ref{tab:features} details the sanitized 26-dimensional behavioral feature vector retained for each account node. All dimensions are normalized to $[0, 1]$ via max-abs scaling: $x_{u, d} = f_{u, d} / (\max_v |f_{v, d}| + \epsilon)$.
+
+\begin{table}[t]
+\centering
+\caption{Sanitized 26-Dimensional Behavioral Feature Vector}
+\label{tab:features}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lll}
+\hline
+\textbf{Clean Index} & \textbf{Feature Name} & \textbf{Operational Semantic Definition} \\
+\hline
+Dims 0--3 & \texttt{out\_tx\_count/tot/mean/max} & Outgoing volume dynamics (Frequency, Sum, Mean, Peak) \\
+Dims 4--7 & \texttt{in\_tx\_count/tot/mean/max} & Incoming volume dynamics (Frequency, Sum, Mean, Peak) \\
+Dims 8--9 & \texttt{uniq\_recv, uniq\_send} & Counterparty fan-out and fan-in diversity \\
+Dim 10 & \texttt{night\_tx\_ratio} & Fraction of events executed between 22:00 and 06:00 \\
+Dim 11 & \texttt{weekend\_tx\_ratio} & Fraction of events executed on Saturday and Sunday \\
+Dim 12 & \texttt{velocity\_24h} & Peak transaction count in any rolling 24-hour window \\
+Dims 13--14 & \texttt{avg\_gap, std\_gap} & Mean and std deviation of inter-transaction time intervals (hours) \\
+Dim 15 & \texttt{cross\_bank\_ratio} & Fraction of volume crossing home banking institution silos \\
+Dims 16--18 & \texttt{atm/xfer/pay\_ratio} & Modality distribution (ATM terminal, P2P transfer, POS payment) \\
+Dims 19--21 & \texttt{amount\_std/skew/q75} & Statistical dispersion, third moment skewness, and 75th percentile \\
+Dims 22--23 & \texttt{uniq\_dev, uniq\_ip} & Distinct hardware UUIDs and network IP addresses bound to account \\
+Dim 24 & \texttt{round\_amount\_ratio} & Fraction of exact round-dollar payments ($\text{amount} \pmod{100} = 0$) \\
+Dim 25 & \texttt{structuring\_score} & Density of transfers in the near-threshold \$8,500--\$9,999 band \\
+\hline
+\end{tabular}%
+}
+\end{table}

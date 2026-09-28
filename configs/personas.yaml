@@ -1,0 +1,73 @@
+personas:
+  Student:
+    age_range: [18, 25]
+    monthly_income: [300, 1500]
+    tx_frequency_per_month: [30, 80]
+    preferred_channels: ["Mobile App"]
+    preferred_sectors: ["Food", "Retail", "Gaming", "Education"]
+    night_ratio: 0.25
+    weekend_ratio: 0.40
+    avg_amount_range: [5, 80]
+  Salaried_Employee:
+    age_range: [22, 60]
+    monthly_income: [3500, 15000]
+    tx_frequency_per_month: [25, 60]
+    preferred_channels: ["Mobile App", "Web Portal"]
+    preferred_sectors: ["Retail", "Food", "Healthcare", "Utilities", "Fuel", "Entertainment"]
+    night_ratio: 0.10
+    weekend_ratio: 0.35
+    avg_amount_range: [20, 500]
+  Business_Owner:
+    age_range: [28, 65]
+    monthly_income: [15000, 150000]
+    tx_frequency_per_month: [60, 200]
+    preferred_channels: ["Web Portal", "Branch"]
+    preferred_sectors: ["Wholesale", "Services", "Retail", "Logistics", "Tax"]
+    night_ratio: 0.05
+    weekend_ratio: 0.15
+    avg_amount_range: [200, 15000]
+  Freelancer:
+    age_range: [20, 45]
+    monthly_income: [2000, 10000]
+    tx_frequency_per_month: [20, 70]
+    preferred_channels: ["Mobile App", "Web Portal"]
+    preferred_sectors: ["Software", "Services", "Retail", "Food", "Coworking"]
+    night_ratio: 0.20
+    weekend_ratio: 0.30
+    avg_amount_range: [30, 800]
+  Retiree:
+    age_range: [60, 85]
+    monthly_income: [1200, 5000]
+    tx_frequency_per_month: [10, 30]
+    preferred_channels: ["ATM", "Branch", "Web Portal"]
+    preferred_sectors: ["Healthcare", "Retail", "Food", "Utilities"]
+    night_ratio: 0.02
+    weekend_ratio: 0.15
+    avg_amount_range: [15, 300]
+  HNWI:
+    age_range: [35, 75]
+    monthly_income: [50000, 500000]
+    tx_frequency_per_month: [20, 90]
+    preferred_channels: ["Web Portal", "Branch"]
+    preferred_sectors: ["Luxury_Goods", "Real Estate", "Investments", "Travel_Airline"]
+    night_ratio: 0.12
+    weekend_ratio: 0.25
+    avg_amount_range: [1000, 50000]
+  Money_Mule:
+    age_range: [18, 40]
+    monthly_income: [500, 3000]
+    tx_frequency_per_month: [5, 20]
+    preferred_channels: ["Mobile App", "ATM"]
+    preferred_sectors: ["Retail", "Food"]
+    night_ratio: 0.30
+    weekend_ratio: 0.30
+    avg_amount_range: [10, 200]
+  Shell_Company:
+    age_range: [0, 5]
+    monthly_income: [100000, 2000000]
+    tx_frequency_per_month: [50, 300]
+    preferred_channels: ["Web Portal"]
+    preferred_sectors: ["Consulting", "Import_Export", "Financial_Services", "Shell_Company"]
+    night_ratio: 0.10
+    weekend_ratio: 0.05
+    avg_amount_range: [5000, 100000]

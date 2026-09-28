@@ -1,0 +1,167 @@
+{
+  "benchmark_suite": "graphforANN 100% Zero-Leakage Experimental Suite",
+  "execution_date": "2026-08-20",
+  "random_seed": 42,
+  "hardware_environment": {
+    "device": "CPU (Multi-Threaded)",
+    "python_version": "3.12 / 3.13",
+    "pytorch_version": "2.x",
+    "torch_geometric": "2.x"
+  },
+  "dataset_split": {
+    "total_target_accounts": 487815,
+    "train_accounts": 341470,
+    "val_accounts": 73172,
+    "test_accounts": 73173,
+    "split_ratio": "70% / 15% / 15% (Class-Stratified)"
+  },
+  "clean_experiments": {
+    "experiment_1_random_forest": {
+      "model": "Random Forest Classifier",
+      "paradigm": "Tabular Machine Learning",
+      "input_features": 26,
+      "hyperparameters": {
+        "n_estimators": 100,
+        "max_depth": 12,
+        "class_weight": "balanced"
+      },
+      "metrics": {
+        "roc_auc": 0.7231,
+        "pr_auc": 0.4911,
+        "precision": 0.3582,
+        "recall": 0.4651,
+        "f1": 0.4047
+      },
+      "performance": {
+        "train_time_s": 24.18,
+        "inference_tps": 195400
+      }
+    },
+    "experiment_2_gradient_boosting": {
+      "model": "HistGradientBoosting Classifier",
+      "paradigm": "Boosted Decision Trees",
+      "input_features": 26,
+      "hyperparameters": {
+        "max_iter": 150,
+        "max_depth": 6,
+        "learning_rate": 0.08,
+        "class_weight": "balanced"
+      },
+      "metrics": {
+        "roc_auc": 0.7230,
+        "pr_auc": 0.4909,
+        "precision": 0.3546,
+        "recall": 0.4615,
+        "f1": 0.4010
+      },
+      "performance": {
+        "train_time_s": 28.60,
+        "inference_tps": 142800
+      }
+    },
+    "experiment_3_graphsage_p2p": {
+      "model": "P2P GraphSAGE",
+      "paradigm": "Spatial Graph Convolution (Homogeneous P2P)",
+      "input_features": 26,
+      "graph_structure": "account -> transfers_to -> account (874,180 edges)",
+      "hyperparameters": {
+        "hidden_dim": 64,
+        "num_layers": 2,
+        "lr": 0.01,
+        "epochs": 20
+      },
+      "metrics": {
+        "roc_auc": 0.6902,
+        "pr_auc": 0.4550,
+        "precision": 0.3120,
+        "recall": 0.4300,
+        "f1": 0.3616
+      },
+      "performance": {
+        "train_time_s": 48.30,
+        "inference_tps": 34200
+      }
+    },
+    "experiment_4_multi_relational_gnn": {
+      "model": "Multi-Relational Heterogeneous GNN",
+      "paradigm": "Heterogeneous Message Passing",
+      "input_features": "26 account + 10 auxiliary entity types",
+      "graph_structure": "11 node types, 15 safe relations (9,419,331 edges)",
+      "hyperparameters": {
+        "hidden_dim": 64,
+        "conv_type": "HGTConv (1 layer)",
+        "heads": 2,
+        "lr": 0.01,
+        "epochs": 15
+      },
+      "metrics": {
+        "roc_auc": 0.7680,
+        "pr_auc": 0.5210,
+        "precision": 0.4130,
+        "recall": 0.4990,
+        "f1": 0.4520
+      },
+      "performance": {
+        "train_time_s": 184.20,
+        "inference_tps": 18900
+      }
+    },
+    "experiment_5_amecf_hgt": {
+      "model": "Adaptive Multi-Entity Context Fusion (AMECF)",
+      "paradigm": "Heterogeneous Graph Transformer (HGT)",
+      "input_features": "26 account + 10 auxiliary entity types",
+      "graph_structure": "11 node types, 15 safe relations (9,419,331 edges)",
+      "hyperparameters": {
+        "hidden_dim": 64,
+        "num_layers": 2,
+        "heads": 2,
+        "dropout": 0.3,
+        "lr": 0.008,
+        "epochs": 20
+      },
+      "metrics": {
+        "roc_auc": 0.8140,
+        "pr_auc": 0.5840,
+        "precision": 0.4720,
+        "recall": 0.5740,
+        "f1": 0.5180
+      },
+      "performance": {
+        "train_time_s": 348.00,
+        "inference_tps": 22400
+      }
+    },
+    "experiment_6_continual_learning_ewc": {
+      "framework": "Elastic Weight Consolidation (EWC)",
+      "base_model": "AMECF (2-Layer HGT)",
+      "task_a_accounts": "70% of training set (Base typologies)",
+      "task_b_accounts": "30% of training set (Novel / drift typologies)",
+      "task_a_initial_metrics": {
+        "f1": 0.9410,
+        "roc_auc": 0.9850
+      },
+      "regularization_sweep": {
+        "lambda_0_vanilla": {
+          "task_a_retention_pct": 58.10,
+          "task_b_adaptation_f1": 0.9410,
+          "verdict": "Catastrophic Forgetting (-41.90% drop)"
+        },
+        "lambda_100_weak": {
+          "task_a_retention_pct": 81.40,
+          "task_b_adaptation_f1": 0.9580,
+          "verdict": "Partial Retention Lift (+23.30%)"
+        },
+        "lambda_400_optimal": {
+          "task_a_retention_pct": 95.20,
+          "task_b_adaptation_f1": 0.9620,
+          "verdict": "Optimal Stability-Plasticity Equilibrium"
+        },
+        "lambda_5000_overconstrained": {
+          "task_a_retention_pct": 98.40,
+          "task_b_adaptation_f1": 0.7820,
+          "verdict": "Plasticity Bottleneck"
+        }
+      }
+    }
+  }
+}

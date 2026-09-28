@@ -1,0 +1,7 @@
+Figure 3: AMECF Heterogeneous Context Attention Layer Computation
+================================================================================
+Description:
+Computation graph of the AMECF architecture:
+1. Type-specific linear projection heads W_t projecting input vectors into shared hidden space R^32.
+2. Heterogeneous Graph Transformer (HGT) multi-head attention computing relational query, key, value, and message tensors across heterogeneous neighborhoods.
+3. Target account node representation aggregation followed by 2-layer MLP classifier head with Dropout (p=0.3).

@@ -1,0 +1,28 @@
+\section{Problem Formulation}
+\label{sec:formulation}
+
+\subsection{Heterogeneous Financial Transaction Graph Definition}
+We define a financial ecosystem as a heterogeneous multi-relational graph:
+\begin{equation}
+    \mathcal{G} = (\mathcal{V}, \mathcal{E}, \mathcal{T}_v, \mathcal{T}_e, \phi, \psi, \mathcal{X})
+\end{equation}
+where $\mathcal{V} = \bigcup_{\tau \in \mathcal{T}_v} \mathcal{V}_\tau$ represents the set of all entity nodes partitioned into $|\mathcal{T}_v|$ distinct node types via the node mapping function $\phi: \mathcal{V} \to \mathcal{T}_v$. The edge set $\mathcal{E} = \bigcup_{r \in \mathcal{T}_e} \mathcal{E}_r$ consists of directed relational edges mapped to relation types via $\psi: \mathcal{E} \to \mathcal{T}_e$. Each relation type $r = (\tau_s, \rho, \tau_d)$ specifies a source entity type $\tau_s$, a semantic relation name $\rho$, and a destination entity type $\tau_d$.
+
+The feature tensor dictionary $\mathcal{X} = \{\mathbf{X}_\tau \in \mathbb{R}^{|\mathcal{V}_\tau| \times d_\tau} \mid \tau \in \mathcal{T}_v\}$ assigns a $d_\tau$-dimensional input feature vector $\mathbf{x}_v \in \mathbb{R}^{d_\tau}$ to each node $v \in \mathcal{V}_\tau$.
+
+\subsection{Supervised Entity Classification Objective}
+Let $\mathcal{V}_{\text{acc}} \subset \mathcal{V}$ denote the subset of target financial account nodes. Each target account $u \in \mathcal{V}_{\text{acc}}$ is associated with a ground-truth binary label $y_u \in \{0, 1\}$, where $y_u = 1$ denotes an illicit or money-laundering account and $y_u = 0$ denotes a benign entity. 
+
+The primary objective is to learn a parameterized mapping function $f_\theta: \mathcal{G} \to [0, 1]^{|\mathcal{V}_{\text{acc}}|}$ that predicts the posterior probability $\hat{y}_u = P(y_u = 1 \mid \mathcal{G})$ while optimizing the class-weighted binary cross-entropy loss:
+\begin{equation}
+    \mathcal{L}_{\text{BCE}}(\theta) = -\frac{1}{|\mathcal{V}_{\text{train}}|} \sum_{u \in \mathcal{V}_{\text{train}}} \left[ w_1 y_u \log \hat{y}_u + w_0 (1 - y_u) \log (1 - \hat{y}_u) \right]
+    \label{eq:bce_loss}
+\end{equation}
+where $w_1 = \frac{|\mathcal{V}_{\text{train}}| - \sum y_u}{\sum y_u + \epsilon}$ balances the severe empirical class imbalance ($\approx 5\%$ positive ratio).
+
+\subsection{Continual Graph Learning Formulation}
+In a dynamic financial environment, the distribution of crime typologies shifts over sequential time horizons $\mathcal{T} = \{1, 2, \dots, K\}$. In task $k$, the model receives a sub-dataset $\mathcal{D}_k = (\mathcal{G}_k, \mathcal{Y}_k)$ corresponding to novel or evolving financial crime patterns. The continual learning objective is to optimize predictive accuracy on task $k$ without degrading accuracy on preceding tasks $\{1, \dots, k-1\}$:
+\begin{equation}
+    \min_\theta \mathcal{L}_k(\theta) \quad \text{s.t.} \quad \mathcal{R}_{1:k-1}(\theta) \ge \gamma
+\end{equation}
+where $\mathcal{R}_{1:k-1}(\theta)$ denotes the retained test performance metric on past tasks and $\gamma$ is a target retention threshold.

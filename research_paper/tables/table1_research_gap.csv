@@ -1,0 +1,6 @@
+Paradigm,Entities Modeled,Topological Depth,Leakage Resilience,Continual Learning Resilience,Typical Benchmark Limitation
+Rule-Based Thresholds,Account only,0 (Tabular),High (Rules fixed),None (Manual maintenance),High False Positive Rate (>95%)
+Tabular ML (RF / XGB),Account only,0 (Local features),Vulnerable (Historical counters leak labels),Catastrophic Forgetting,Blind to multi-hop mule networks
+Homogeneous GNNs (GraphSAGE),Account-to-Account,1-2 Hops (P2P only),Moderate (P2P topology only),Catastrophic Forgetting,Misses shared devices, IPs, ATMs, merchants
+Pre-Audit Hetero-GNNs,14 Entity Types,Multi-Hop Heterogeneous,Severely Compromised (Target-bearing edges),Catastrophic Forgetting,Trivial propagation of ground-truth crime rings
+AMECF + EWC (Ours),11 Entity Types (Safe),Multi-Hop Heterogeneous HGT,Certified 100% Zero-Leakage,Optimal Stability-Plasticity (EWC),Full cross-entity reasoning with continual retention

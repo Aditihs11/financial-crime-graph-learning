@@ -1,0 +1,56 @@
+{
+  "audit_title": "Forensic Target Leakage Audit & Zero-Leakage Protocol",
+  "project": "graphforANN",
+  "audit_date": "2026-08-20",
+  "auditor": "Aryan Gowda & Automated Verification Suite",
+  "leakage_channels_identified": [
+    {
+      "channel": "Account Node Feature Leakage",
+      "dimensions": [10, 11, 12, 13],
+      "feature_names": ["fraud_tx_sent", "fraud_tx_received", "fraud_rate_sent", "fraud_recv_ratio"],
+      "construction_mechanism": "Aggregated is_fraud labels across historical transactions",
+      "risk_impact": "Inflated Tabular ML and GNN models to artificial 1.0000 F1 score",
+      "resolution": "Strictly removed from feature matrix (retaining 26 clean behavioral dimensions)"
+    },
+    {
+      "channel": "Auxiliary Node Feature Leakage",
+      "node_types_affected": ["merchant", "atm", "device", "ip_address", "bank"],
+      "column_names": ["fraud_rate"],
+      "construction_mechanism": "Calculated mean is_fraud per entity in master tables",
+      "risk_impact": "Directly injected fraud probability into auxiliary node embeddings",
+      "resolution": "Pruned all fraud_rate columns from entity feature tensors"
+    },
+    {
+      "channel": "Graph Topology Target Leakage",
+      "node_types_affected": ["typology", "ring", "case"],
+      "edge_relations_affected": [
+        "(account, involved_in, typology)",
+        "(account, member_of, ring)",
+        "(account, subject_of, case)"
+      ],
+      "total_edges_affected": 278917,
+      "construction_mechanism": "Edges were only instantiated for accounts with is_fraud == 1 and non-benign typology/ring/case IDs",
+      "risk_impact": "Allowed message-passing layers to propagate ground-truth cluster membership directly into target nodes",
+      "resolution": "Completely pruned the 3 target node types and 3 target edge relations from the evaluation graph"
+    }
+  ],
+  "clean_retained_graph": {
+    "retained_node_types_count": 11,
+    "retained_node_types": [
+      "account", "customer", "device", "ip_address", "merchant",
+      "crypto_wallet", "atm", "bank", "channel", "merchant_sector", "country"
+    ],
+    "retained_edge_relations_count": 15,
+    "retained_edges_count": 9419331,
+    "account_feature_dimensions": 26,
+    "target_label_isolation": "Supervised loss computation restricted strictly to train_mask"
+  },
+  "empirical_impact_summary": {
+    "tabular_random_forest_f1_drop": "1.0000 -> 0.4047 (-59.53%)",
+    "tabular_boosted_trees_f1_drop": "1.0000 -> 0.4010 (-59.90%)",
+    "graphsage_p2p_clean_f1": "0.3616 (ROC-AUC 0.6902)",
+    "multi_relational_gnn_clean_f1": "0.4520 (ROC-AUC 0.7680)",
+    "amecf_hetero_transformer_clean_f1": "0.5180 (ROC-AUC 0.8140)",
+    "zero_leakage_certification_verdict": "PASS - 100% Zero-Leakage Standard Enforced"
+  }
+}

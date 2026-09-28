@@ -1,0 +1,11 @@
+Figure 1: Overall 3-Tier Architecture of the graphforANN Platform
+================================================================================
+Description:
+End-to-end pipeline showing:
+[Tier 1: Data Access Layer] -> [Feature Engineering (30 Dims) & HeteroData Builder] 
+-> [Tier 2: FastAPI Machine Learning & Continual Learning REST Service] 
+-> [Tier 3: Streamlit Interactive Portal with 22 Operational Modules].
+
+Replacement Guide:
+Place the high-resolution architecture diagram (figure1.png or figure1.pdf) in this directory 
+and update the \includegraphics{figures/figure1.png} command in research_paper.tex.

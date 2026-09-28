@@ -1,0 +1,49 @@
+\section{Leakage-Safe Heterogeneous Graph Construction}
+\label{sec:graph}
+
+\subsection{Topological Leakage in Multi-Relational Financial Graphs}
+In the pre-audit 14-node graph representation, three relation types directly incorporated ground-truth investigation data:
+\begin{enumerate}
+    \item $(\text{account}, \text{involved\_in}, \text{typology})$ (92,115 edges): Connected accounts directly to typology nodes if and only if $\text{typology} \neq \text{`BENIGN'}$.
+    \item $(\text{account}, \text{member\_of}, \text{ring})$ (93,401 edges): Linked accounts to ground-truth crime ring clusters if $\text{ring\_id} \neq \text{`NORMAL'}$.
+    \item $(\text{account}, \text{subject\_of}, \text{case})$ (93,401 edges): Linked accounts to active SAR investigation cases if $\text{case\_id} \neq \text{`NORMAL'}$.
+\end{enumerate}
+
+Because these 278,917 edges were instantiated exclusively on positive fraud cases, any graph neural network executing message passing across these relations trivially learned that receiving a message along these edge channels implies $P(y_u = 1) = 1.0$.
+
+\subsection{Leakage-Safe Graph Transformation}
+To eliminate topological leakage, we perform a rigorous graph surgery:
+\begin{enumerate}
+    \item \textbf{Target Node Pruning:} Completely remove the 3 target-derived node types: \texttt{typology} (13 nodes), \texttt{ring} (500 nodes), and \texttt{case} (500 nodes).
+    \item \textbf{Target Relation Pruning:} Completely remove the 3 target-bearing relations (\texttt{involved\_in}, \texttt{member\_of}, \texttt{subject\_of}), excising all 278,917 target edges.
+    \item \textbf{Auxiliary Feature Sanitization:} Remove historical fraud rate columns from \texttt{merchant} (col 2), \texttt{atm} (col 2), \texttt{device} (col 2), \texttt{ip\_address} (col 2), and \texttt{bank} (col 1).
+\end{enumerate}
+
+\subsection{Certified Leakage-Safe Graph Schema}
+The resulting leakage-safe graph $\mathcal{G}_{\text{safe}}$ contains exactly \textbf{11 node types} and \textbf{15 safe behavioral edge relations}, comprising \textbf{1,332,385 nodes} and \textbf{9,419,331 edges}:
+\begin{enumerate}
+    \item $(\text{account}, \text{transfers\_to}, \text{account})$: 874,180 P2P fund transfers
+    \item $(\text{account}, \text{buys\_from}, \text{merchant})$: 800,945 commercial POS payments
+    \item $(\text{account}, \text{withdraws\_from}, \text{atm})$: 159,395 cash withdrawal events
+    \item $(\text{account}, \text{uses\_device}, \text{device})$: 1,960,535 hardware authentications
+    \item $(\text{account}, \text{from\_ip}, \text{ip\_address})$: 1,935,113 network session logs
+    \item $(\text{account}, \text{belongs\_to}, \text{bank})$: 1,553,378 bank silo memberships
+    \item $(\text{account}, \text{transacts\_via}, \text{channel})$: 926,956 modality channel links
+    \item $(\text{account}, \text{owned\_by}, \text{customer})$: 487,815 legal ownership bindings
+    \item $(\text{merchant}, \text{operates\_in}, \text{merchant\_sector})$: 40,000 category mappings
+    \item $(\text{bank}, \text{operates\_in}, \text{country})$: 10 sovereign registrations
+    \item $(\text{ip\_address}, \text{geolocated\_in}, \text{country})$: 99,999 IP geolocation blocks
+    \item $(\text{account}, \text{has\_wallet}, \text{crypto\_wallet})$: 15,724 Web3 gateway bindings
+    \item $(\text{atm}, \text{located\_in}, \text{bank})$: 10,000 physical ATM affiliations
+    \item $(\text{device}, \text{assigned\_to}, \text{channel})$: 539,318 device category links
+    \item $(\text{merchant}, \text{accepts\_crypto}, \text{crypto\_wallet})$: 15,963 Web3 merchant gateways
+\end{enumerate}
+
+Fig.~\ref{fig:graph_schema} illustrates the structural contrast between the pre-audit and leakage-safe graph schemas.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/fig2_graph_schema.pdf}
+\caption{Comparison of financial graph schemas: (a) Pre-audit schema containing 14 node types and 3 target-leaked relations (278,917 edges); (b) Sanitized 100\% zero-leakage schema containing 11 entity types and 15 legitimate behavioral relations (9,419,331 edges).}
+\label{fig:graph_schema}
+\end{figure}

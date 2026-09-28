@@ -1,0 +1,26 @@
+# graphforANN requirements
+# Install with: pip install -r requirements.txt
+
+# Core data
+pandas>=2.0.0
+numpy>=1.24.0
+scipy>=1.11.0
+
+# ML / Models
+scikit-learn>=1.3.0
+xgboost>=1.7.0
+
+# GNN (PyTorch Geometric)
+torch>=2.0.0
+torch-geometric>=2.3.0
+
+# Dashboard
+streamlit>=1.28.0
+plotly>=5.15.0
+
+# Config
+pyyaml>=6.0
+
+# Optional (for notebook exploration)
+# jupyter>=1.0.0
+# matplotlib>=3.7.0
